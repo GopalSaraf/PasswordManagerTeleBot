@@ -27,7 +27,8 @@ async def start(bot, update):
 async def reply(bot, message):
   chat_id = int(message.chat.id)
   text = str(message.text)
-  reply_text = f"**Here's is your message:**\n<code>{text}</code>\n\nThank You!"
+  ran_no = random.random()
+  reply_text = f"**Here's is your message:**\n<code>{text}</code>\n\n**Here's your random number:**\n__{ran_no}__\n\nThank You!"
   await bot.send_message(text=reply_text, chat_id=chat_id)
   
 firstclient.run()
