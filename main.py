@@ -9,10 +9,10 @@ from pyrogram.types import User, Message
 import random
 
 firstclient = Client(
-  "SampleBot",
-  bot_token = "1811277952:AAHmerb6PEqYNCRqQfnI5B9s_Bt1wzHfdqg",
-  api_id = 4072549
-  api_hash = "9004f340b4b8fde2a93ab021a130fe9b"
+    "SampleBot",
+    bot_token = os.environ["BOT_TOKEN"],
+    api_id = int(os.environ["API_ID"]),
+    api_hash = os.environ["API_HASH"]
 )
 
 start_string = "Hi {},\nI am a sample bot"
