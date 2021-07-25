@@ -1,0 +1,30 @@
+{
+    "name": "SampleBot",
+    "description": "Pyrogram Based Google Text To Speech Bot",
+    "logo": "https://telegra.ph/file/25c3e3246dee8df0cc91c.jpg",
+    "repository": "https://github.com/GopalSaraf/justforfun",
+    "keywords": [
+       
+        "telegram bot",
+        "pyrogram"
+    ],
+    "env": {
+        "BOT_TOKEN": {
+            "description": "Your Bot token from @Botfather",
+            "value": "1811277952:AAHmerb6PEqYNCRqQfnI5B9s_Bt1wzHfdqg"
+        },
+        "API_ID": {
+            "description": "Your API_ID from https://my.telegram.org/apps",
+            "value": "4072549"
+        },
+        "API_HASH": {
+            "description": "Your API_HASH from https://my.telegram.org/apps",
+            "value": "9004f340b4b8fde2a93ab021a130fe9b"
+        }
+    },
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ]
+}
