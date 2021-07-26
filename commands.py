@@ -32,3 +32,4 @@ and..
 Thank you!
 """
 
+gen_random_pwd_msg = "Here is your password:\n<code>{}</code>"
