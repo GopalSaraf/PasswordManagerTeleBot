@@ -26,7 +26,8 @@ async def start(bot, update):
 @firstclient.on_message(filters.command(help_command))
 async def help(bot, update):
     await update.reply_text(
-    text=help_msg
+    text=help_msg,
+    parse_mode='html'
     )
 
 '''
