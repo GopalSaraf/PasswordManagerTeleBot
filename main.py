@@ -48,6 +48,6 @@ async def gen_random_pwd(bot, update):
     
 @firstclient.on_message((filters.text | filters.forwarded | filters.reply) & filters.private)
 async def reply(bot, message):
-    await bot.send_message(text="Working on that..!")
+    await bot.send_message(text="Working on that..!", chat_id=int(message.chat.id))
 
 firstclient.run()
