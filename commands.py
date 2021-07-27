@@ -20,7 +20,7 @@ Here you can generate strong passwords and save them for future use.
 2| Generating password by your specific characters
 
 **Commands:** 
-- /randpwd <code><len></code> <code><info></code>: For generating password by random characters.
+- /randpwd <len> <info>: For generating password by random characters.
 - /specpwd <code><len></code> <code><char></code> <code><info></code>: For generating password by your specific characters. (<code><char></code> means characters you want to use in your passwords.)
 - /mypwds: For getting saved passwords.
 
