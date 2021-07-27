@@ -23,7 +23,6 @@ async def start(bot, update):
     await update.reply_text(
     text=start_msg.format(update.from_user.mention)
     )
-    chat_id = int(message.chat.id)
 
 # Help Command
 @firstclient.on_message(filters.command(help_command))
@@ -91,9 +90,8 @@ async def reply(bot, message):
 # mypwds command
 @firstclient.on_message(filters.command(my_pwds_command))
 async def mypwds(bot, update):
-    chat_id = int(message.chat.id)
-    saved_pwds = f"{chat_id}.txt"
-    await message.reply_document(saved_pwds, quote='Your passwords!')
+    
+    await message.reply_document("SavedPasswords.txt", quote='Your passwords!')
     
     
 firstclient.run()
