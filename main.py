@@ -8,6 +8,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.types import User, Message
 from commands import *
 from pwdgen import pwdgen as pg
+from pwdgen import savepwd as sp
 
 firstclient = Client(
     "PasswordGenerator",
@@ -22,6 +23,7 @@ async def start(bot, update):
     await update.reply_text(
     text=start_msg.format(update.from_user.mention)
     )
+    chat_id = int(message.chat.id)
 
 # Help Command
 @firstclient.on_message(filters.command(help_command))
@@ -56,6 +58,7 @@ async def reply(bot, message):
     password,
     info    
     )
+    sp(password,info)
     
 # specpwd command
   if msg_list[0] == '/' + gen_spec_pwd_command[0]:
@@ -81,8 +84,16 @@ async def reply(bot, message):
         password,
         info    
         )
+        sp(password,info)
             
   await bot.send_message(text=reply_text, chat_id=chat_id)
 
-
+# mypwds command
+@firstclient.on_message(filters.command(my_pwds_command))
+async def mypwds(bot, update):
+    chat_id = int(message.chat.id)
+    saved_pwds = f"{chat_id}.txt"
+    await message.reply_document(saved_pwds, quote='Your passwords!')
+    
+    
 firstclient.run()
