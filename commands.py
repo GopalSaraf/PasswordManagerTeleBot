@@ -4,7 +4,7 @@ start_command = ["start"]
 help_command = ["help"]
 gen_random_pwd_command = ["randpwd"]
 gen_spec_pwd_command = ["specpwd"]
-my_pwd_command = ["mypwds"]
+my_pwds_command = ["mypwds"]
 
 
 # messages
