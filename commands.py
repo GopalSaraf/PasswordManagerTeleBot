@@ -21,17 +21,15 @@ Here you can generate strong passwords and save them for future use.
 
 **Commands:** 
 - /randpwd <<code>len</code>> <<code>info</code>>: For generating password by random characters.
-- /specpwd <code><len></code> <code><char></code> <code><info></code>: For generating password by your specific characters. (<code><char></code> means characters you want to use in your passwords.)
+- /specpwd <<code>len</code>> <<code>char</code>> <<code>info</code>>: For generating password by your specific characters. (<<code>char</code>> means characters you want to use in your password.)
 - /mypwds: For getting saved passwords.
 
 👆here in commands..
-<code><info></code> means length of password required.
+<<code>info</code>> means length of password required.
 and..
-<code><info></code> means for what you are generating password. This will be helpful to you for future use.
+<<code>info</code>> means for what you are generating password. This will be helpful to you for future use.
 
 Thank you!
 """
-
-#help_msg = "Save your passwords safely here..\n\nHere you can generate strong passwords and save them for future use.\n\n**Commands:**\n- /randpwd <code><len></code> <code><info></code>: For generating password by random characters.\n- /specpwd <code><len></code> <code><char></code> <code><info></code>: For generating password by your specific characters. (<code><char></code> means characters you want to use in your passwords.)\n- /mypwds: For getting saved passwords."
 
 gen_random_pwd_msg = "Here is your password:\n<code>{}</code>"
