@@ -85,7 +85,7 @@ async def reply(bot, message):
         )
         sp(password,info)
             
-  await bot.send_message(text=reply_text, chat_id=chat_id)
+    await bot.send_message(text=reply_text, chat_id=chat_id)
 
 # mypwds command
 @firstclient.on_message(filters.command(my_pwds_command))
