@@ -35,10 +35,10 @@ Thank you!
 gen_random_pwd_msg = """**Your password is generated**
 
 **Here is your password:**
-<code>{1}</code>
+<code>{0}</code>
 
 **Password info:**
-<code>{2}</code>
+<code>{1}</code>
 
 Your password is saved successfully😊!
 """
