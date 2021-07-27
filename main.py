@@ -90,8 +90,10 @@ async def reply(bot, message):
 # mypwds command
 @firstclient.on_message(filters.command(my_pwds_command))
 async def mypwds(bot, update):
+    chat_id = int(message.chat.id)
+    with open("SavedPasswords.txt") as file
+        await bot.send_document(chat_id, file, caption="Your Passwords!")
     
-    await message.reply_document("SavedPasswords.txt", quote='Your passwords!')
     
     
 firstclient.run()
