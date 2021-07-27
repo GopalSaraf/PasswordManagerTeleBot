@@ -32,4 +32,13 @@ and..
 Thank you!
 """
 
-gen_random_pwd_msg = "Here is your password:\n<code>{}</code>"
+gen_random_pwd_msg = """**Your password is generated**
+
+**Here is your password:**
+<code>{1}</code>
+
+**Password info:**
+<code>{2}</code>
+
+Your password is saved successfully😊!
+"""
