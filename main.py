@@ -34,58 +34,58 @@ async def help(bot, update):
 
 @firstclient.on_message((filters.text | filters.forwarded | filters.reply) & filters.private)
 async def reply(bot, message):
-  chat_id = int(message.chat.id)
-  text = str(message.text)
-  msg_list = text.split(' ')
+    chat_id = int(message.chat.id)
+    text = str(message.text)
+    msg_list = text.split(' ')
 
-# randpwd command
-  if msg_list[0] == '/' + gen_random_pwd_command[0]:
-    if len(msg_list) >= 3:
-        try:
-            length = int(msg_list[1])
-        except:
-            length = 8
-        info = ' '.join([str(item) for item in msg_list[2:]])
-    else:
-        try:
-            length = int(msg_list[1])
-        except:
-            length = 8
-        info = 'No info given.'
-    password = pg(length=length)
-    reply_text = pwd_msg.format(
-    password,
-    info    
-    )
-    sp(password,info)
-    
-# specpwd command
-  if msg_list[0] == '/' + gen_spec_pwd_command[0]:
-    if len(msg_list) == 1:
-        reply_text = f"Characters are compulsory for /{gen_spec_pwd_command[0]}. For more info- /help"
-    else:
-        char = msg_list[1]
-        char_set = list(char)
-        if len(msg_list) >= 4:
+    # randpwd command
+    if msg_list[0] == '/' + gen_random_pwd_command[0]:
+        if len(msg_list) >= 3:
             try:
-                length = int(msg_list[2])
+                length = int(msg_list[1])
             except:
                 length = 8
-            info = ' '.join([str(item) for item in msg_list[3:]])
+            info = ' '.join([str(item) for item in msg_list[2:]])
         else:
             try:
-                length = int(msg_list[2])
+                length = int(msg_list[1])
             except:
                 length = 8
             info = 'No info given.'
-        password = pg(length=length,set=char_set)
+        password = pg(length=length)
         reply_text = pwd_msg.format(
-        password,
-        info    
+            password,
+            info
         )
-        sp(password,info)
-            
-    await bot.send_message(text=reply_text, chat_id=chat_id)
+        sp(password, info)
+
+    # specpwd command
+    if msg_list[0] == '/' + gen_spec_pwd_command[0]:
+        if len(msg_list) == 1:
+            reply_text = f"Characters are compulsory for /{gen_spec_pwd_command[0]}. For more info- /help"
+        else:
+            char = msg_list[1]
+            char_set = list(char)
+            if len(msg_list) >= 4:
+                try:
+                    length = int(msg_list[2])
+                except:
+                    length = 8
+                info = ' '.join([str(item) for item in msg_list[3:]])
+            else:
+                try:
+                    length = int(msg_list[2])
+                except:
+                    length = 8
+                info = 'No info given.'
+            password = pg(length=length, set=char_set)
+            reply_text = pwd_msg.format(
+                password,
+                info
+            )
+            sp(password, info)
+
+        await bot.send_message(text=reply_text, chat_id=chat_id)
 
 # mypwds command
 @firstclient.on_message(filters.command(my_pwds_command))
