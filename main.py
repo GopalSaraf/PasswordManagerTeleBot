@@ -29,16 +29,34 @@ async def help(bot, update):
     text=help_msg,
     )
 
-'''
+
 @firstclient.on_message((filters.text | filters.forwarded | filters.reply) & filters.private)
 async def reply(bot, message):
   chat_id = int(message.chat.id)
   text = str(message.text)
-  ran_no = random.random()
-  reply_text = f"**Here's is your message:**\n<code>{text}</code>\n\n**Here's your random number:**\n__{ran_no}__\n\nThank You!"
+  msg_list = text.split(' ')
+  if msg_list[0] == '/' + gen_random_pwd_command[0]:
+    if len(msg_list) >= 3:
+        try:
+            length = int(msg_list[1])
+        except:
+            length = 8
+        info = ' '.join([str(item) for item in msg_list[2:]])
+    else:
+        try:
+            length = int(msg_list[1])
+        except:
+            length = 8
+        info = 'No info given.'
+        password = pg(length=length)
+    reply_text = gen_random_pwd_msg.format(
+    password,
+    info    
+    )
+            
   await bot.send_message(text=reply_text, chat_id=chat_id)
-'''
 
+'''
 @firstclient.on_message(filters.command(gen_random_pwd_command))
 async def gen_random_pwd(bot, update):
     password = pg()
@@ -49,5 +67,5 @@ async def gen_random_pwd(bot, update):
 @firstclient.on_message((filters.text | filters.forwarded | filters.reply) & filters.private)
 async def reply(bot, message):
     await bot.send_message(text="Working on that..!", chat_id=int(message.chat.id))
-
+'''
 firstclient.run()
