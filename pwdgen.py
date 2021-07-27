@@ -21,6 +21,8 @@ def savepwd(pwd,info):
     dt = datetime.datetime.now()
     pwd_line = f"Password: {pwd}\nPassword info: {info}\nPassword saved at {dt}\n\n"
     
+    f = open("SavedPasswords.txt","w+")
+    f.close()
     with open("SavedPasswords.txt", 'r+') as file:
         content = file.read()
         file.seek(0, 0)
