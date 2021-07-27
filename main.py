@@ -48,7 +48,7 @@ async def reply(bot, message):
         except:
             length = 8
         info = 'No info given.'
-        password = pg(length=length)
+    password = pg(length=length)
     reply_text = gen_random_pwd_msg.format(
     password,
     info    
