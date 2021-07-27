@@ -27,7 +27,6 @@ async def start(bot, update):
 async def help(bot, update):
     await update.reply_text(
     text=help_msg,
-    parse_mode='html'
     )
 
 '''
