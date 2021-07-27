@@ -1,5 +1,4 @@
 import random
-import datetime
 
 small_alphabets = "abcdefghijklmnopqrstuvwxyz"
 cap_alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -18,8 +17,9 @@ def pwdgen(length=8,set=universal_set):
 
 
 def savepwd(pwd,info):
-    datetime = datetime.datetime()
-    pwd_line = f"Password: {pwd}\nPassword info: {info}\nPassword saved at {datetime}\n\n"
+    import datetime
+    dt = datetime.datetime.now()
+    pwd_line = f"Password: {pwd}\nPassword info: {info}\nPassword saved at {dt}\n\n"
     
     with open("SavedPasswords.txt", 'r+') as file:
         content = file.read()
