@@ -10,7 +10,7 @@ universal_set = list(small_alphabets) + list(cap_alphabets) + list(numbers) + li
 def pwdgen(length=8,set=universal_set):
     password = ''
     for i in range(int(length)):
-        x = random.choice(universal_set)
+        x = random.choice(set)
         password += x
         
     return password
