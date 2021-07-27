@@ -76,11 +76,11 @@ async def reply(bot, message):
             except:
                 length = 8
             info = 'No info given.'
-    password = pg(length=length,set=char_set)
-    reply_text = pwd_msg.format(
-    password,
-    info    
-    )
+        password = pg(length=length,set=char_set)
+        reply_text = pwd_msg.format(
+        password,
+        info    
+        )
             
   await bot.send_message(text=reply_text, chat_id=chat_id)
 
