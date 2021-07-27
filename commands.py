@@ -25,7 +25,7 @@ Here you can generate strong passwords and save them for future use.
 - /mypwds: For getting saved passwords.
 
 👆here in commands..
-<<code>info</code>> means length of password required.
+<<code>len</code>> means length of password required.
 and..
 <<code>info</code>> means for what you are generating password. This will be helpful to you for future use.
 
