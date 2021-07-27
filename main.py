@@ -10,19 +10,20 @@ from commands import *
 from pwdgen import pwdgen as pg
 
 firstclient = Client(
-    "SampleBot",
+    "PasswordGenerator",
     bot_token = os.environ["BOT_TOKEN"],
     api_id = int(os.environ["API_ID"]),
     api_hash = os.environ["API_HASH"]
 )
 
-
+# Start Command
 @firstclient.on_message(filters.command(start_command))
 async def start(bot, update):
     await update.reply_text(
     text=start_msg.format(update.from_user.mention)
     )
 
+# Help Command
 @firstclient.on_message(filters.command(help_command))
 async def help(bot, update):
     await update.reply_text(
@@ -35,6 +36,8 @@ async def reply(bot, message):
   chat_id = int(message.chat.id)
   text = str(message.text)
   msg_list = text.split(' ')
+
+# randpwd command
   if msg_list[0] == '/' + gen_random_pwd_command[0]:
     if len(msg_list) >= 3:
         try:
@@ -49,23 +52,37 @@ async def reply(bot, message):
             length = 8
         info = 'No info given.'
     password = pg(length=length)
-    reply_text = gen_random_pwd_msg.format(
+    reply_text = pwd_msg.format(
+    password,
+    info    
+    )
+    
+# specpwd command
+  if msg_list[0] == '/' + gen_spec_pwd_command[0]:
+    if len(msg_list) == 1:
+        reply_text = f"Characters are compulsory for /{gen_spec_pwd_command[0]}. For more info- /help"
+    else:
+        char = msg_list[1]
+        char_set = list(char)
+        if len(msg_list) >= 4:
+            try:
+                length = int(msg_list[2])
+            except:
+                length = 8
+            info = ' '.join([str(item) for item in msg_list[3:]])
+        else:
+            try:
+                length = int(msg_list[2])
+            except:
+                length = 8
+            info = 'No info given.'
+    password = pg(length=length,set=char_set)
+    reply_text = pwd_msg.format(
     password,
     info    
     )
             
   await bot.send_message(text=reply_text, chat_id=chat_id)
 
-'''
-@firstclient.on_message(filters.command(gen_random_pwd_command))
-async def gen_random_pwd(bot, update):
-    password = pg()
-    await update.reply_text(
-    text=gen_random_pwd_msg.format(password)
-    )
-    
-@firstclient.on_message((filters.text | filters.forwarded | filters.reply) & filters.private)
-async def reply(bot, message):
-    await bot.send_message(text="Working on that..!", chat_id=int(message.chat.id))
-'''
+
 firstclient.run()
