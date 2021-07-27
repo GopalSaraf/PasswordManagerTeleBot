@@ -11,7 +11,6 @@ my_pwd_command = ["mypwds"]
 
 start_msg = "Hii {}!\nI am **password manager bot!**\nPress /help for more info."
 
-'''
 help_msg = """Save your passwords safely here..
 
 Here you can generate strong passwords and save them for future use.
@@ -21,7 +20,7 @@ Here you can generate strong passwords and save them for future use.
 2| Generating password by your specific characters
 
 **Commands:** 
-- /randpwd <code><len></code> <code><info></code>: For generating password by random characters.
+- /randpwd <<code>len</code>> <<code>info</code>>: For generating password by random characters.
 - /specpwd <code><len></code> <code><char></code> <code><info></code>: For generating password by your specific characters. (<code><char></code> means characters you want to use in your passwords.)
 - /mypwds: For getting saved passwords.
 
@@ -32,8 +31,7 @@ and..
 
 Thank you!
 """
-'''
 
-help_msg = "Save your passwords safely here..\n\nHere you can generate strong passwords and save them for future use.\n\n**Commands:**\n- /randpwd <code><len></code> <code><info></code>: For generating password by random characters.\n- /specpwd <code><len></code> <code><char></code> <code><info></code>: For generating password by your specific characters. (<code><char></code> means characters you want to use in your passwords.)\n- /mypwds: For getting saved passwords."
+#help_msg = "Save your passwords safely here..\n\nHere you can generate strong passwords and save them for future use.\n\n**Commands:**\n- /randpwd <code><len></code> <code><info></code>: For generating password by random characters.\n- /specpwd <code><len></code> <code><char></code> <code><info></code>: For generating password by your specific characters. (<code><char></code> means characters you want to use in your passwords.)\n- /mypwds: For getting saved passwords."
 
 gen_random_pwd_msg = "Here is your password:\n<code>{}</code>"
