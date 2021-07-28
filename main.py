@@ -89,18 +89,19 @@ async def reply(bot, message):
             sp(f'{chat_id}.txt' , password, info)
 
         await bot.send_message(text=reply_text, chat_id=chat_id)
-        
+ 
+    # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
         with open(f"{chat_id}.txt") as file:
-            await bot.send_document(chat_id=chat_id, file_name=file, caption="Your Passwords!")
-
+            await bot.send_document(chat_id=chat_id, document=file, file_name='Passwords!')
+'''
 # mypwds command
 @firstclient.on_message(filters.command(my_pwds_command))
 async def mypwds(bot, update):
     chat_id = int(message.chat.id)
     with open(f"{chat_id}.txt") as file:
         await update.send_document(chat_id=chat_id, file_name=file, caption="Your Passwords!")
-    
+'''
     
     
 firstclient.run()
