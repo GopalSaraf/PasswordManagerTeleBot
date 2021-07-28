@@ -58,6 +58,9 @@ async def reply(bot, message):
             info
         )
         sp(password, info)
+        
+        await bot.send_message(text=reply_text, chat_id=chat_id)
+        
 
     # specpwd command
     if msg_list[0] == '/' + gen_spec_pwd_command[0]:
