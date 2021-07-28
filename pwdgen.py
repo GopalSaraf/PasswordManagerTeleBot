@@ -15,11 +15,3 @@ def pwdgen(length=8, set=universal_set):
         
     return password
 
-
-def savepwd(file, pwd, info):
-    import datetime
-    dt = datetime.datetime.now()
-    pwd_line = f"Password: {pwd}\nPassword info: {info}\nPassword saved at {dt}\n\n"
-    
-    with open(file, 'a') as f:
-        print(pwd_line, file=f)
