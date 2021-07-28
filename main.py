@@ -57,7 +57,7 @@ async def reply(bot, message):
             password,
             info
         )
-        sp(password, info)
+        sp(f'{chat_id}.txt' , password, info)
         
         await bot.send_message(text=reply_text, chat_id=chat_id)
         
@@ -86,7 +86,7 @@ async def reply(bot, message):
                 password,
                 info
             )
-            sp(password, info)
+            sp(f'{chat_id}.txt' , password, info)
 
         await bot.send_message(text=reply_text, chat_id=chat_id)
 
@@ -94,8 +94,8 @@ async def reply(bot, message):
 @firstclient.on_message(filters.command(my_pwds_command))
 async def mypwds(bot, update):
     chat_id = int(message.chat.id)
-    with open("SavedPasswords.txt") as file:
-        await bot.send_document(chat_id, file, caption="Your Passwords!")
+    with open(f"{chat_id}.txt") as file:
+        await bot.send_document(chat_id=chat_id, file, caption="Your Passwords!")
     
     
     
