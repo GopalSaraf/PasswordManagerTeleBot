@@ -53,7 +53,7 @@ async def reply(bot, message):
                 length = int(msg_list[1])
             except:
                 length = 8
-            info = 'No info given.'
+            info = 'No info given'
         password = pg(length=length)
         reply_text = pwd_msg.format(
             password,
@@ -82,7 +82,7 @@ async def reply(bot, message):
                     length = int(msg_list[2])
                 except:
                     length = 8
-                info = 'No info given.'
+                info = 'No info given'
             password = pg(length=length, set=char_set)
             reply_text = pwd_msg.format(
                 password,
@@ -94,15 +94,12 @@ async def reply(bot, message):
  
     # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
-        await bot.send_message(text=str(saved_passwords), chat_id=chat_id)
-'''
-# mypwds command
-@firstclient.on_message(filters.command(my_pwds_command))
-async def mypwds(bot, update):
-    chat_id = int(message.chat.id)
-    with open(f"{chat_id}.txt") as file:
-        await update.send_document(chat_id=chat_id, file_name=file, caption="Your Passwords!")
-'''
+        reply_text = "**Here are your passwords:**\n\n"
+        for pwds in saved_passwords:
+            info, pwd = pwds
+            reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\n\n"
+        await bot.send_message(text=reply_text, chat_id=chat_id)
+
     
     
 firstclient.run()
