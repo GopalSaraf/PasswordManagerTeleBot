@@ -93,6 +93,7 @@ async def reply(bot, message):
     # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
         with open(f"{chat_id}.txt") as file:
+            print('Hii', file=file)
             await bot.send_document(chat_id=chat_id, document=file, file_name='Passwords!')
 '''
 # mypwds command
