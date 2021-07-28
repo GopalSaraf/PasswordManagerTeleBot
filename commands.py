@@ -5,6 +5,7 @@ help_command = ["help"]
 gen_random_pwd_command = ["randpwd"]
 gen_spec_pwd_command = ["specpwd"]
 my_pwds_command = ["mypwds"]
+search_pwd_command = ["search"]
 
 
 # messages
@@ -22,7 +23,8 @@ Here you can generate strong passwords and save them for future use.
 **Commands:** 
 - /randpwd **<**<code>len</code>**> <**<code>info</code>**>**: For generating password by random characters.
 - /specpwd **<**<code>char</code>**> <**<code>len</code>**> <**<code>info</code>**>**: For generating password by your specific characters. (**<**<code>char</code>**>** means characters you want to use in your password.)
-- /mypwds: For getting saved passwords.
+- /search **<**<code>info</code>**>**: This command will search for specific passwords with info provided.
+- /mypwds: To get all saved passwords.
 
 👆here in commands..
 **<**<code>len</code>**>** means length of password required.
