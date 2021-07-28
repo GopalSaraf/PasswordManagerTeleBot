@@ -17,6 +17,8 @@ firstclient = Client(
     api_hash = os.environ["API_HASH"]
 )
 
+saved_passwords = []
+
 # Start Command
 @firstclient.on_message(filters.command(start_command))
 async def start(bot, update):
@@ -57,7 +59,7 @@ async def reply(bot, message):
             password,
             info
         )
-        sp(f'{chat_id}.txt' , password, info)
+        saved_passwords.append([info, password])
         
         await bot.send_message(text=reply_text, chat_id=chat_id)
         
@@ -86,15 +88,13 @@ async def reply(bot, message):
                 password,
                 info
             )
-            sp(f'{chat_id}.txt' , password, info)
+            saved_passwords.append([info, password])
 
         await bot.send_message(text=reply_text, chat_id=chat_id)
  
     # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
-        with open(f"{chat_id}.txt", 'w') as file:
-            print('Hii', file=file)
-            await bot.send_document(chat_id=chat_id, document=file, file_name='Passwords!')
+        await bot.send_message(text=saved_paswords[:], chat_id=chat_id)
 '''
 # mypwds command
 @firstclient.on_message(filters.command(my_pwds_command))
