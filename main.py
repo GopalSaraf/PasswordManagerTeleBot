@@ -8,6 +8,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.types import User, Message
 from commands import *
 from pwdgen import pwdgen as pg
+import datetime
 
 
 firstclient = Client(
@@ -55,11 +56,12 @@ async def reply(bot, message):
                 length = 8
             info = 'No info given'
         password = pg(length=length)
+        dt = datetime.datetime.now()
         reply_text = pwd_msg.format(
             password,
             info
         )
-        saved_passwords.append([info, password])
+        saved_passwords.append([info, password, dt])
         
         await bot.send_message(text=reply_text, chat_id=chat_id)
         
@@ -85,11 +87,12 @@ async def reply(bot, message):
                     length = 8
                 info = 'No info given'
             password = pg(length=length, set=char_set)
+            dt = datetime.datetime.now()
             reply_text = pwd_msg.format(
                 password,
                 info
             )
-            saved_passwords.append([info, password])
+            saved_passwords.append([info, password, dt])
 
         await bot.send_message(text=reply_text, chat_id=chat_id)
  
@@ -97,8 +100,8 @@ async def reply(bot, message):
     if msg_list[0] == '/' + my_pwds_command[0]:
         reply_text = "**Here are your all passwords:**\n\n"
         for pwds in saved_passwords:
-            info, pwd = pwds
-            reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\n\n"
+            info, pwd, dt = pwds
+            reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
             
         await bot.send_message(text=reply_text, chat_id=chat_id)
         
@@ -112,7 +115,7 @@ async def reply(bot, message):
             for pwds in saved_passwords:
                 if to_srch.lower() in pwds[0].lower():
                     info, pwd = pwds
-                    reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\n\n"
+                    reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
                 else:
                     continue
                 
