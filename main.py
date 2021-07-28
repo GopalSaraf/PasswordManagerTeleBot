@@ -95,7 +95,7 @@ async def reply(bot, message):
 async def mypwds(bot, update):
     chat_id = int(message.chat.id)
     with open(f"{chat_id}.txt") as file:
-        await bot.send_document(chat_id=chat_id, file, caption="Your Passwords!")
+        await bot.send_document(chat_id=chat_id, file_name=file, caption="Your Passwords!")
     
     
     
