@@ -9,6 +9,7 @@ from pyrogram.types import User, Message
 from commands import *
 from pwdgen import pwdgen as pg
 import datetime
+import pytz
 
 
 firstclient = Client(
@@ -56,12 +57,13 @@ async def reply(bot, message):
                 length = 8
             info = 'No info given'
         password = pg(length=length)
-        dt = datetime.datetime.now()
+        dt = datetime.datetime.now(pytz.timezone('Asia/Kolkata')) 
+        dtf = dt.strftime("%d/%m/%Y %H:%M:%S")
         reply_text = pwd_msg.format(
             password,
             info
         )
-        saved_passwords.append([info, password, dt])
+        saved_passwords.append([info, password, dtf])
         
         await bot.send_message(text=reply_text, chat_id=chat_id)
         
@@ -87,12 +89,13 @@ async def reply(bot, message):
                     length = 8
                 info = 'No info given'
             password = pg(length=length, set=char_set)
-            dt = datetime.datetime.now()
+            dt = datetime.datetime.now(pytz.timezone('Asia/Kolkata')) 
+            dtf = dt.strftime("%d/%m/%Y %H:%M:%S")
             reply_text = pwd_msg.format(
                 password,
                 info
             )
-            saved_passwords.append([info, password, dt])
+            saved_passwords.append([info, password, dtf])
 
         await bot.send_message(text=reply_text, chat_id=chat_id)
  
