@@ -68,6 +68,7 @@ async def reply(bot, message):
     if msg_list[0] == '/' + gen_spec_pwd_command[0]:
         if len(msg_list) == 1:
             reply_text = f"Characters are compulsory for /{gen_spec_pwd_command[0]}. For more info- /help"
+            
         else:
             char = msg_list[1]
             char_set = list(char)
@@ -94,12 +95,25 @@ async def reply(bot, message):
  
     # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
-        reply_text = "**Here are your passwords:**\n\n"
+        reply_text = "**Here are your all passwords:**\n\n"
         for pwds in saved_passwords:
             info, pwd = pwds
             reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\n\n"
+            
         await bot.send_message(text=reply_text, chat_id=chat_id)
-
+        
+    # search command
+    if msg_list[0] == '/' + search_pwd_command[0]:
+        to_srch = msg_list[1]
+        reply_text = f"**Here are your passwords in search of {to_srch}:**\n\n"
+        for pwds in saved_passwords:
+            if to_srch.lower() in pwds[0].lower:
+                info, pwd = pwds
+                reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\n\n"
+            else:
+                continue
+                
+        await bot.send_message(text=reply_text, chat_id=chat_id)
     
     
 firstclient.run()
