@@ -94,7 +94,7 @@ async def reply(bot, message):
  
     # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
-        await bot.send_message(text=saved_paswords[:], chat_id=chat_id)
+        await bot.send_message(text=str(saved_passwords), chat_id=chat_id)
 '''
 # mypwds command
 @firstclient.on_message(filters.command(my_pwds_command))
