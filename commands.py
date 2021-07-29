@@ -10,7 +10,7 @@ search_pwd_command = ["search"]
 
 # messages
 
-start_msg = "Hii {}!\nI am **password manager bot!**\nPress /help for more info."
+start_msg = "Hii {}!\nI am **password manager bot!**\nI can create **strong** passwords for you and also I can save them for you!\nPress /help for more info."
 
 help_msg = """Save your passwords safely here..
 
