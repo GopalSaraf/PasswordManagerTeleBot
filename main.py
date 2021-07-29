@@ -117,7 +117,7 @@ async def reply(bot, message):
             reply_text = f"**Here are your passwords in search of {to_srch}:**\n\n"
             for pwds in saved_passwords:
                 if to_srch.lower() in pwds[0].lower():
-                    info, pwd = pwds
+                    info, pwd, dt = pwds
                     reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
                 else:
                     continue
