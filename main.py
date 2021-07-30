@@ -109,26 +109,35 @@ async def reply(bot, message):
  
     # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
-        reply_text = "**Here are your all passwords:**\n\n"
-        for pwds in saved_passwords[chat_id]:
-            info, pwd, dt = pwds
-            reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
+        if chat_id in saved_passwords:            
+            reply_text = "**Here are your all passwords:**\n\n"
+            for pwds in saved_passwords[chat_id]:
+                info, pwd, dt = pwds
+                reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
+        else:
+            reply_text="You don't have any saved passwords yet."
             
         await bot.send_message(text=reply_text, chat_id=chat_id)
         
     # search command
     if msg_list[0] == '/' + search_pwd_command[0]:
-        if len(msg_list) == 1:
-            reply_text = "Please provide info to search for in passwords. For more- /help"
-        else:
-            to_srch = msg_list[1]
-            reply_text = f"**Here are your passwords in search of {to_srch}:**\n\n"
-            for pwds in saved_passwords[chat_id]:
-                if to_srch.lower() in pwds[0].lower():
-                    info, pwd, dt = pwds
-                    reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
+        if chat_id in saved_passwords:
+            if len(msg_list) == 1:
+                reply_text = "Please provide info to search for in passwords. For more- /help"
+            else:
+                to_srch = msg_list[1]
+                srch_reply_text = ''
+                for pwds in saved_passwords[chat_id]:
+                    if to_srch.lower() in pwds[0].lower():
+                        info, pwd, dt = pwds
+                        srch_reply_text = srch_reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
+                if srch_reply_text == '':
+                    reply_text = f"No password found in search of {to_srch}!"
                 else:
-                    continue
+                    reply_text = f"**Here are your passwords in search of {to_srch}:**\n\n" + srch_reply_text
+                    
+        else:
+            reply_text="You don't have any saved passwords yet to search in for."
                 
         await bot.send_message(text=reply_text, chat_id=chat_id)
     
