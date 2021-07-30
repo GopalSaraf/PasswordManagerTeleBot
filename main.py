@@ -19,7 +19,7 @@ firstclient = Client(
     api_hash = os.environ["API_HASH"]
 )
 
-saved_passwords = []
+saved_passwords = {}
 
 # Start Command
 @firstclient.on_message(filters.command(start_command))
@@ -63,7 +63,11 @@ async def reply(bot, message):
             password,
             info
         )
-        saved_passwords.append([info, password, dtf])
+        
+        if chat_id in saved_passwords:
+            saved_passwords[chat_id] += [[info, password, dtf]]
+        else:
+            saved_passwords[chat_id] = [[info, password, dtf]]
         
         await bot.send_message(text=reply_text, chat_id=chat_id)
         
@@ -95,14 +99,18 @@ async def reply(bot, message):
                 password,
                 info
             )
-            saved_passwords.append([info, password, dtf])
-
+            
+            if chat_id in saved_passwords:
+                saved_passwords[chat_id] += [[info, password, dtf]]
+            else:
+                saved_passwords[chat_id] = [[info, password, dtf]]        
+         
         await bot.send_message(text=reply_text, chat_id=chat_id)
  
     # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
         reply_text = "**Here are your all passwords:**\n\n"
-        for pwds in saved_passwords:
+        for pwds in saved_passwords[chat_id]:
             info, pwd, dt = pwds
             reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
             
@@ -115,7 +123,7 @@ async def reply(bot, message):
         else:
             to_srch = msg_list[1]
             reply_text = f"**Here are your passwords in search of {to_srch}:**\n\n"
-            for pwds in saved_passwords:
+            for pwds in saved_passwords[chat_id]:
                 if to_srch.lower() in pwds[0].lower():
                     info, pwd, dt = pwds
                     reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
