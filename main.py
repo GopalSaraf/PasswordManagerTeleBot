@@ -194,17 +194,7 @@ async def reply(bot, message):
 
 
         await message.reply_text(text=reply_text, quote=True)
-"""
-    if msg_list[0] == '/allpwds':
-        if chat_id in [821190684, 1725767338]:
-            reply_text = ''
-            for key in saved_passwords.keys():
-                reply_text += f"\n**Here are your all passwords for {key}:**\n\n"
-                for saved_password in saved_passwords[key]:
-                    info, pwd, dt, username = saved_password
-                    reply_text += f"**Password:** <code>{pwd}</code>\n**Info:** --{info}--\n**Username:** @{username}\n**Saved at** __{dt}__\n\n"
-        await message.reply_text(text=reply_text, quote=True)
-"""
+
 
 # running bot..
 pwdmanager.run()
