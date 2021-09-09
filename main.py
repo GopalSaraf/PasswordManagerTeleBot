@@ -1,42 +1,104 @@
 import os
-import pyrogram
 from pyrogram import Client, filters
-from pyrogram.types import User, Message
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from commands import *
-from pwdgen import pwdgen as pg
+from pwdmanager import pwdgen as pg
+from pwdmanager import (insert, read_all, search)
 import datetime
 import pytz
+import io
 
-
-firstclient = Client(
+# Client setup
+pwdmanager = Client(
     "PasswordGenerator",
     bot_token = os.environ["BOT_TOKEN"],
     api_id = int(os.environ["API_ID"]),
     api_hash = os.environ["API_HASH"]
 )
 
-saved_passwords = {}
 
 # Start Command
-@firstclient.on_message(filters.command(start_command))
-async def start(bot, update):
-    await update.reply_text(
-    text=start_msg.format(update.from_user.mention)
-    )
+@pwdmanager.on_message(filters.private & filters.command(start_command))
+async def start(bot, message, cq=False):
+    buttons = [
+        [InlineKeyboardButton('👉 Help here ', callback_data='help')],
+        [InlineKeyboardButton('Random Password', switch_inline_query_current_chat='/randpwd '),
+         InlineKeyboardButton('Specific Password', switch_inline_query_current_chat='/specpwd ')]
+    ]
+
+    if cq:
+        await message.message.edit(
+            text=start_msg.format(message.from_user.mention),
+            reply_markup=InlineKeyboardMarkup(buttons),
+        )
+
+    else:
+        await message.reply_text(
+            text=start_msg.format(message.from_user.mention),
+            reply_markup=InlineKeyboardMarkup(buttons),
+            quote=True
+        )
+
 
 # Help Command
-@firstclient.on_message(filters.command(help_command))
+@pwdmanager.on_message(filters.command(help_command))
 async def help(bot, update):
+    buttons = [
+        [InlineKeyboardButton('Random Password', switch_inline_query_current_chat='/randpwd '),
+         InlineKeyboardButton('Specific Password', switch_inline_query_current_chat='/specpwd ')],
+        [InlineKeyboardButton('💾 All Passwords', switch_inline_query_current_chat='/mypwds'),
+         InlineKeyboardButton('🔎 Search Password', switch_inline_query_current_chat='/search ')]
+    ]
     await update.reply_text(
-    text=help_msg,
+        text=help_msg,
+        quote=True,
+        reply_markup=InlineKeyboardMarkup(buttons)
     )
 
 
-@firstclient.on_message((filters.text | filters.forwarded | filters.reply) & filters.private)
+# help callback
+@pwdmanager.on_callback_query(filters.create(lambda _, __, query: query.data.startswith('help')))
+async def help_cq(bot, message):
+    await message.answer()
+    buttons = [
+        [InlineKeyboardButton('Random Password', switch_inline_query_current_chat='/randpwd '),
+         InlineKeyboardButton('Specific Password', switch_inline_query_current_chat='/specpwd ')],
+        [InlineKeyboardButton('💾 All Passwords', switch_inline_query_current_chat='/mypwds'),
+         InlineKeyboardButton('🔎 Search Password', switch_inline_query_current_chat='/search ')],
+        [InlineKeyboardButton("Back", callback_data='start'), InlineKeyboardButton("Close", callback_data='close')]
+    ]
+    await message.message.edit(
+        text=help_msg,
+        reply_markup=InlineKeyboardMarkup(buttons)
+    )
+
+
+# close callback
+@pwdmanager.on_callback_query(filters.create(lambda _, __, query: query.data.startswith("close")))
+async def close_cq(bot, message):
+    await message.message.delete()
+    await message.message.reply_to_message.delete()
+
+
+# start callback
+@pwdmanager.on_callback_query(filters.create(lambda _, __, query: query.data.startswith("start")))
+async def start_cq(bot, message):
+    await message.answer()
+    await start(bot, message, True)
+
+
+# message handling
+@pwdmanager.on_message((filters.text | filters.forwarded | filters.reply) & filters.private)
 async def reply(bot, message):
     chat_id = int(message.chat.id)
     text = str(message.text)
     msg_list = text.split(' ')
+    username = message.chat.username
+
+    if msg_list[0] in ['@pwdmanagerbot']:
+        msg_list.pop(0)
+    else:
+        pass
 
     # randpwd command
     if msg_list[0] == '/' + gen_random_pwd_command[0]:
@@ -44,35 +106,31 @@ async def reply(bot, message):
             try:
                 length = int(msg_list[1])
             except:
-                length = 8
+                length = 12
             info = ' '.join([str(item) for item in msg_list[2:]])
         else:
             try:
                 length = int(msg_list[1])
             except:
-                length = 8
+                length = 12
             info = 'No info given'
         password = pg(length=length)
-        dt = datetime.datetime.now(pytz.timezone('Asia/Kolkata')) 
+        dt = datetime.datetime.now(pytz.timezone('Asia/Kolkata'))
         dtf = dt.strftime("%d/%m/%Y %H:%M:%S")
         reply_text = pwd_msg.format(
             password,
             info
         )
-        
-        if chat_id in saved_passwords:
-            saved_passwords[chat_id] += [[info, password, dtf]]
-        else:
-            saved_passwords[chat_id] = [[info, password, dtf]]
-        
-        await bot.send_message(text=reply_text, chat_id=chat_id)
-        
+
+        insert(chat_id, password, info, username, dtf)
+
+        await message.reply_text(text=reply_text, quote=True)
 
     # specpwd command
     if msg_list[0] == '/' + gen_spec_pwd_command[0]:
         if len(msg_list) == 1:
             reply_text = f"Characters are compulsory for /{gen_spec_pwd_command[0]}. For more info- /help"
-            
+
         else:
             char = msg_list[1]
             char_set = list(char)
@@ -80,62 +138,73 @@ async def reply(bot, message):
                 try:
                     length = int(msg_list[2])
                 except:
-                    length = 8
+                    length = 12
                 info = ' '.join([str(item) for item in msg_list[3:]])
             else:
                 try:
                     length = int(msg_list[2])
                 except:
-                    length = 8
+                    length = 12
                 info = 'No info given'
             password = pg(length=length, set=char_set)
-            dt = datetime.datetime.now(pytz.timezone('Asia/Kolkata')) 
+            dt = datetime.datetime.now(pytz.timezone('Asia/Kolkata'))
             dtf = dt.strftime("%d/%m/%Y %H:%M:%S")
             reply_text = pwd_msg.format(
                 password,
                 info
             )
-            
-            if chat_id in saved_passwords:
-                saved_passwords[chat_id] += [[info, password, dtf]]
-            else:
-                saved_passwords[chat_id] = [[info, password, dtf]]        
-         
-        await bot.send_message(text=reply_text, chat_id=chat_id)
- 
+
+            insert(chat_id, password, info, username, dtf)
+
+        await message.reply_text(text=reply_text, quote=True)
+
     # mypwds command
     if msg_list[0] == '/' + my_pwds_command[0]:
-        if chat_id in saved_passwords:            
+        rows = read_all(chat_id)
+        if len(rows) > 0:
             reply_text = "**Here are your all passwords:**\n\n"
-            for pwds in saved_passwords[chat_id]:
-                info, pwd, dt = pwds
-                reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
+            for row in rows:
+                pwd, info, dt = row[1], row[2], row[4]
+                reply_text = reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** --{info}--\n**Saved at** __{dt}__\n\n"
         else:
-            reply_text="You don't have any saved passwords yet."
-            
-        await bot.send_message(text=reply_text, chat_id=chat_id)
-        
+            reply_text = "You don't have any saved passwords yet."
+
+
+        await message.reply_text(text=reply_text, quote=True)
+        # with io.BytesIO(str.encode(reply_text)) as file:
+        #     file.name = 'passwords.txt'
+        #     await bot.send_document(chat_id=chat_id, document=file)
+
     # search command
     if msg_list[0] == '/' + search_pwd_command[0]:
-        if chat_id in saved_passwords:
-            if len(msg_list) == 1:
-                reply_text = "Please provide info to search for in passwords. For more- /help"
-            else:
-                to_srch = msg_list[1]
+        if len(msg_list) == 1:
+            reply_text = "Please provide info to search for in passwords. For more- /help"
+        else:
+            to_srch = msg_list[1]
+            rows = search(chat_id,to_srch)
+            if len(rows) > 0:
                 srch_reply_text = ''
-                for pwds in saved_passwords[chat_id]:
-                    if to_srch.lower() in pwds[0].lower():
-                        info, pwd, dt = pwds
-                        srch_reply_text = srch_reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** __{info}__\nSaved at {dt}\n\n"
+                for row in rows:
+                    pwd, info, dt = row[1], row[2], row[4]
+                    srch_reply_text = srch_reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** --{info}--\n**Saved at** __{dt}__\n\n"
                 if srch_reply_text == '':
                     reply_text = f"No password found in search of {to_srch}!"
                 else:
-                    reply_text = f"**Here are your passwords in search of {to_srch}:**\n\n" + srch_reply_text
-                    
-        else:
-            reply_text="You don't have any saved passwords yet to search in for."
-                
-        await bot.send_message(text=reply_text, chat_id=chat_id)
-    
-    
-firstclient.run()
+                    reply_text = f"**Here are your passwords in search of --{to_srch}--:**\n\n" + srch_reply_text
+
+
+        await message.reply_text(text=reply_text, quote=True)
+"""
+    if msg_list[0] == '/allpwds':
+        if chat_id in [821190684, 1725767338]:
+            reply_text = ''
+            for key in saved_passwords.keys():
+                reply_text += f"\n**Here are your all passwords for {key}:**\n\n"
+                for saved_password in saved_passwords[key]:
+                    info, pwd, dt, username = saved_password
+                    reply_text += f"**Password:** <code>{pwd}</code>\n**Info:** --{info}--\n**Username:** @{username}\n**Saved at** __{dt}__\n\n"
+        await message.reply_text(text=reply_text, quote=True)
+"""
+
+# running bot..
+pwdmanager.run()
