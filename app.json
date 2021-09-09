@@ -11,16 +11,25 @@
     "env": {
         "BOT_TOKEN": {
             "description": "Your Bot token from @Botfather",
-            "value": "1811277952:AAHmerb6PEqYNCRqQfnI5B9s_Bt1wzHfdqg"
         },
         "API_ID": {
             "description": "Your API_ID from https://my.telegram.org/apps",
-            "value": "4072549"
         },
         "API_HASH": {
             "description": "Your API_HASH from https://my.telegram.org/apps",
-            "value": "9004f340b4b8fde2a93ab021a130fe9b"
-        }
+        },
+        "DATABASE": {
+            "description": "Your database name here where passwords are gonna save.",
+        },
+        "DATABASE_HOST": {
+            "description": "Database host.",
+        },
+        "DATABASE_USER": {
+            "description": "Database user.",
+        },
+        "DATABASE_PASSWORD": {
+            "description": "Database password.",
+        },
     },
     "buildpacks": [
         {
