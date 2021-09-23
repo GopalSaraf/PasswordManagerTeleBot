@@ -8,8 +8,8 @@
     "Password"
   ],
   "env": {
-    "BOT_USER_NAME": {
-      "descreption": "Bot username with @. like @pwdmanagerbot"
+    "BOT_USERNAME": {
+      "description": "Bot username. like @pwdmanagerbot."
     },
     "BOT_TOKEN": {
       "description": "Get it from @BotFather"
@@ -20,8 +20,8 @@
     "API_HASH": {
       "description": "Your API_HASH, Get it from https://my.telegram.org/apps"
     },
-    "DATA_BASE_URL": {
-      "descreption": "If you have a database then database url here. Else leave it.",
+    "DATABASE_URL": {
+      "description": "If you have a database then database url here. Else leave it.",
       "required": false
     }
   },
