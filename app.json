@@ -8,10 +8,6 @@
     "Password"
   ],
   "env": {
-    "ENV": {
-      "description": "Set it to anything to enable configuration by environment variables.",
-      "value": "ANYTHING"
-    },
     "BOT_USERNAME": {
       "descreption": "Bot username with @. like @pwdmanagerbot"
     },
