@@ -21,7 +21,7 @@
       "description": "Your API_HASH, Get it from https://my.telegram.org/apps"
     },
     "DATABASE_URL": {
-      "descreption": "If you have a database then database url here. Else leave it."
+      "descreption": "If you have a database then database url here. Else leave it.",
       "required": false
     }
   },
