@@ -3,7 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from commands import *
 from pwdmanager import pwdgen as pg
-from pwdmanager import (insert, read_all, search)
+from pwdmanager import (insert, read_all, search, create_table)
 import datetime
 import pytz
 
@@ -15,6 +15,7 @@ pwdmanager = Client(
     api_hash=os.environ["API_HASH"]
 )
 
+create_table()
 
 # Start Command
 @pwdmanager.on_message(filters.private & filters.command(start_command))
