@@ -22,14 +22,18 @@ def pwdgen(length=12, set=universal_set):
 
 try:
     database_url = os.environ.get('DATA_BASE_URL')
+    user = re.search('//(.*):', database_url).group(1).split(':')[0].strip()
+    pwd = re.search(':(.*)@', database_url).group(1).split(':')[1].strip()
+    host = re.search('@(.*):', database_url).group(1).strip()
+    database = re.search(r'\d\d\d\d/(.*)', database_url).group(1).strip()
 except:
     database_url = os.environ.get('DATABASE_URL')
+    user = re.search('//(.*):', database_url).group(1).split(':')[0].strip()
+    pwd = re.search(':(.*)@', database_url).group(1).split(':')[1].strip()
+    host = re.search('@(.*):', database_url).group(1).strip()
+    database = re.search(r'\d\d\d\d/(.*)', database_url).group(1).strip()
 
-user = re.search('//(.*):', database_url).group(1).split(':')[0].strip()
-pwd = re.search(':(.*)@', database_url).group(1).split(':')[1].strip()
-host = re.search('@(.*):', database_url).group(1).strip()
-database = re.search(r'\d\d\d\d/(.*)', database_url).group(1).strip()
-
+    
 conn = psycopg2.connect(
     host=host,
     database=database,
