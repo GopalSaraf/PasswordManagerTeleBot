@@ -3,14 +3,17 @@
   "description": "Telegram Bot for Password Management",
   "repository": "https://github.com/GopalSaraf/PasswordManagerTeleBot",
   "logo": "https://telegra.ph/file/25c3e3246dee8df0cc91c.jpg",
-  "keywords": ["Telegram", "Password"],
+  "keywords": [
+    "Telegram",
+    "Password"
+  ],
   "env": {
     "ENV": {
       "description": "Set it to anything to enable configuration by environment variables.",
       "value": "ANYTHING"
     },
     "BOT_USERNAME": {
-      "descreption": "Bot username with @. like @pwdmanagerbot",
+      "descreption": "Bot username with @. like @pwdmanagerbot"
     },
     "BOT_TOKEN": {
       "description": "Get it from @BotFather"
@@ -25,10 +28,12 @@
       "descreption": "Your heroku database url here."
     }
   },
-   "addons": [{
-    "plan": "heroku-postgresql"
-  }],
-   "buildpacks": [
+  "addons": [
+    {
+      "plan": "heroku-postgresql"
+    }
+  ],
+  "buildpacks": [
     {
       "url": "heroku/python"
     }
