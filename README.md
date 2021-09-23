@@ -27,3 +27,7 @@ Simple telegram bot which can create strong passwords and save them.
 * `DATABASE_USER`
 
 * `DATABASE_PASSWORD`
+
+
+Deploy on Heroku:-
+<p><a href="https://heroku.com/deploy?template=https://github.com/GopalSaraf/PasswordManagerTeleBot/tree/master)"> <img src="https://www.herokucdn.com/deploy/button.svg" width="150""/></a></p>
