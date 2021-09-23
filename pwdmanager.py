@@ -21,7 +21,7 @@ def pwdgen(length=12, set=universal_set):
 
 
 try:
-    database_url = os.environ.get('DATABASE__URL')
+    database_url = os.environ.get('DATA_BASE_URL')
 except:
     database_url = os.environ.get('DATABASE_URL')
 
