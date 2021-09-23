@@ -20,7 +20,10 @@ def pwdgen(length=12, set=universal_set):
     return password
 
 
-database_url = os.environ.get('DATABASE_URL')
+try:
+    database_url = os.environ.get('DATABASE__URL')
+except:
+    database_url = os.environ.get('DATABASE_URL')
 
 user = re.search('//(.*):', database_url).group(1).split(':')[0].strip()
 pwd = re.search(':(.*)@', database_url).group(1).split(':')[1].strip()
@@ -35,10 +38,25 @@ conn = psycopg2.connect(
 )
 
 
+def create_table():
+    cur = conn.cursor()
+    cur.execute("""
+    CREATE TABLE IF NOT EXISTS saved_passwords (
+        chat_id VARCHAR(255)
+        pwd VARCHAR(255)
+        info VARCHAR(255)
+        username VARCHAR(255)
+        saved_at VARCHAR(255)
+    )
+    """)
+    conn.commit()
+    cur.close()
+
+
 def insert(user_id, pwd, info, username, saved_at):
     cur = conn.cursor()
     cur.execute(
-        f"insert into saved_passwords (chat_id, password, info, username, saved_at) values ({user_id}, '{pwd}', '{info}', '{username}', '{saved_at}')")
+        f"insert into saved_passwords (chat_id, pwd, info, username, saved_at) values ({user_id}, '{pwd}', '{info}', '{username}', '{saved_at}')")
     conn.commit()
     cur.close()
 
