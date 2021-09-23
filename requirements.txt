@@ -1,3 +1,4 @@
 pyrogram
 tgcrypto
 psycopg2
+pytz
