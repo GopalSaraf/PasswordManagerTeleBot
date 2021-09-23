@@ -6,14 +6,13 @@ from pwdmanager import pwdgen as pg
 from pwdmanager import (insert, read_all, search)
 import datetime
 import pytz
-import io
 
 # Client setup
 pwdmanager = Client(
     "PasswordGenerator",
-    bot_token = os.environ["BOT_TOKEN"],
-    api_id = int(os.environ["API_ID"]),
-    api_hash = os.environ["API_HASH"]
+    bot_token=os.environ["BOT_TOKEN"],
+    api_id=int(os.environ["API_ID"]),
+    api_hash=os.environ["API_HASH"]
 )
 
 
@@ -95,7 +94,7 @@ async def reply(bot, message):
     msg_list = text.split(' ')
     username = message.chat.username
 
-    if msg_list[0] in ['@pwdmanagerbot']:
+    if msg_list[0] in [os.environ.get('BOT_USERNAME')]:
         msg_list.pop(0)
     else:
         pass
@@ -169,29 +168,26 @@ async def reply(bot, message):
         else:
             reply_text = "You don't have any saved passwords yet."
 
-
         await message.reply_text(text=reply_text, quote=True)
         # with io.BytesIO(str.encode(reply_text)) as file:
         #     file.name = 'passwords.txt'
         #     await bot.send_document(chat_id=chat_id, document=file)
 
     # search command
-    if msg_list[0] == '/' + search_pwd_command[0]:
+    if msg_list[0].lower() == '/' + search_pwd_command[0]:
         if len(msg_list) == 1:
             reply_text = "Please provide info to search for in passwords. For more- /help"
         else:
             to_srch = msg_list[1]
-            rows = search(chat_id,to_srch)
+            rows = search(chat_id, to_srch)
             if len(rows) > 0:
                 srch_reply_text = ''
                 for row in rows:
                     pwd, info, dt = row[1], row[2], row[4]
                     srch_reply_text = srch_reply_text + f"**Password:** <code>{pwd}</code>\n**Info:** --{info}--\n**Saved at** __{dt}__\n\n"
-                if srch_reply_text == '':
-                    reply_text = f"No password found in search of {to_srch}!"
-                else:
-                    reply_text = f"**Here are your passwords in search of --{to_srch}--:**\n\n" + srch_reply_text
-
+                reply_text = f"**Here are your passwords in search of --{to_srch}--:**\n\n" + srch_reply_text
+            else:
+                reply_text = f"No password found in search of {to_srch}!"
 
         await message.reply_text(text=reply_text, quote=True)
 
