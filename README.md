@@ -20,13 +20,8 @@ Simple telegram bot which can create strong passwords and save them.
 
 * `API_HASH`: Get at [my.telegram.org/apps](https://my.telegram.org/apps).
 
-* `DATABASE`
+* `DATA_BASE_URL`: If you have a database then url here. If you dont have one then bot will create one for you in heroku.
 
-* `DATABASE_HOST`
-
-* `DATABASE_USER`
-
-* `DATABASE_PASSWORD`
 
 
 Deploy on Heroku:-
