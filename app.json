@@ -20,7 +20,7 @@
     "API_HASH": {
       "description": "Your API_HASH, Get it from https://my.telegram.org/apps"
     },
-    "DATABASE_URL": {
+    "DATABASE__URL": {
       "description": "If you have a database then database url here. Else leave it.",
       "required": false
     }
