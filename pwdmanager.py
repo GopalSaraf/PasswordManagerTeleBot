@@ -46,11 +46,11 @@ def create_table():
     cur = conn.cursor()
     cur.execute("""
     CREATE TABLE IF NOT EXISTS saved_passwords (
-        chat_id VARCHAR(255),
-        pwd VARCHAR(255),
-        info VARCHAR(255),
-        username VARCHAR(255),
-        saved_at VARCHAR(255)
+        chat_id INT,
+        pwd VARCHAR,
+        info VARCHAR,
+        username VARCHAR,
+        saved_at VARCHAR
     )
     """)
     conn.commit()
