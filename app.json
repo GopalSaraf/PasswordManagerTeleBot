@@ -6,7 +6,11 @@
   "keywords": ["Telegram", "Password"],
   "env": {
     "ENV": {
-      "BOT_USERNAME": "Bot username with @. like @pwdmanagerbot",
+      "description": "Set it to anything to enable configuration by environment variables.",
+      "value": "ANYTHING"
+    },
+    "BOT_USERNAME": {
+      "descreption": "Bot username with @. like @pwdmanagerbot",
     },
     "BOT_TOKEN": {
       "description": "Get it from @BotFather"
