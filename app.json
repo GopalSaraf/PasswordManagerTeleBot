@@ -1,39 +1,32 @@
 {
-    "name": "PasswordManagerTeleBot",
-    "description": "Pyrogram Based Google Text To Speech Bot",
-    "logo": "https://telegra.ph/file/25c3e3246dee8df0cc91c.jpg",
-    "repository": "https://github.com/GopalSaraf/PasswordManagerTeleBot",
-    "keywords": [
-       
-        "telegram bot",
-        "pyrogram"
-    ],
-    "env": {
-        "BOT_TOKEN": {
-            "description": "Your Bot token from @Botfather",
-        },
-        "API_ID": {
-            "description": "Your API_ID from https://my.telegram.org/apps",
-        },
-        "API_HASH": {
-            "description": "Your API_HASH from https://my.telegram.org/apps",
-        },
-        "DATABASE": {
-            "description": "Your database name here where passwords are gonna save.",
-        },
-        "DATABASE_HOST": {
-            "description": "Database host.",
-        },
-        "DATABASE_USER": {
-            "description": "Database user.",
-        },
-        "DATABASE_PASSWORD": {
-            "description": "Database password.",
-        },
+  "name": "PasswordManagerTeleBot",
+  "description": "Telegram Bot for Password Management",
+  "repository": "https://github.com/GopalSaraf/PasswordManagerTeleBot",
+  "logo": "https://telegra.ph/file/25c3e3246dee8df0cc91c.jpg",
+  "keywords": ["Telegram", "Password"],
+  "env": {
+    "ENV": {
+      "BOT_USERNAME": "Bot username with @. like @pwdmanagerbot",
     },
-    "buildpacks": [
-        {
-            "url": "heroku/python"
-        }
-    ]
+    "BOT_TOKEN": {
+      "description": "Get it from @BotFather"
+    },
+    "APP_ID": {
+      "description": "Your API_ID, Get it from https://my.telegram.org/apps"
+    },
+    "API_HASH": {
+      "description": "Your API_HASH, Get it from https://my.telegram.org/apps"
+    },
+    "DATABASE_URL": {
+      "descreption": "Your heroku database url here."
+    }
+  },
+   "addons": [{
+    "plan": "heroku-postgresql"
+  }],
+   "buildpacks": [
+    {
+      "url": "heroku/python"
+    },
+  ]
 }
