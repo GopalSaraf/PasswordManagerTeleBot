@@ -129,7 +129,7 @@ async def reply(bot, message):
     # specpwd command
     if msg_list[0] == '/' + gen_spec_pwd_command[0]:
         if len(msg_list) == 1:
-            reply_text = f"Characters are compulsory for /{gen_spec_pwd_command[0]}. For more info- /help"
+            reply_text = f"Your command should look like this - /specpwd **<**<code>char</code>**> <**<code>len</code>**> <**<code>info</code>**>**\n/help for more info."
 
         else:
             char = msg_list[1]
