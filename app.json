@@ -21,7 +21,8 @@
       "description": "Your API_HASH, Get it from https://my.telegram.org/apps"
     },
     "DATABASE_URL": {
-      "descreption": "Your heroku database url here."
+      "descreption": "If you have a database then database url here. Else leave it."
+      "required": false
     }
   },
   "addons": [
