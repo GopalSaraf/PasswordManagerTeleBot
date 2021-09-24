@@ -5,7 +5,7 @@
  <img width=517px height=400px src="https://cdn.pixabay.com/photo/2021/08/25/12/45/phishing-6573326_960_720.png" alt="Bot logo"></a>
 </p>
 
-<p align="center"><h2>Simple telegram bot which can create strong passwords and save them.</h2></p>
+<h2>Simple telegram bot which can create strong passwords and save them.</h2>
 
 
 # Features :- 
