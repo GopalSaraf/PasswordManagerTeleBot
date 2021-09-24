@@ -3,7 +3,7 @@
 Simple telegram bot which can create strong passwords and save them.
 
 
-# Benifits :- 
+# Features :- 
     ✓ Can generate password in two ways :-   
         - By choosing random characters
         - By choosing specific characters
